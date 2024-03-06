@@ -10,7 +10,7 @@ function shallowCopy(obj) {
   return Object.assign(arr, obj);
 }
 
-//console.log(shallowCopy({ a: 2, b: 5 }));
+console.log(shallowCopy({ a: 2, b: 5 }));
 
 function removeProperties(obj, keys) {
   const newObj = {};
