@@ -1,29 +1,48 @@
-function shallowCopy(obj) {
-  const arr = Object.create(null);
-  /*
-  Object.entries(obj).forEach((o) => {
-    const key = o[0];
-    const value = o[1];
-    arr[key] = value;
-  });
-*/
-  return Object.assign(arr, obj);
+function group(array, keySelector, valueSelector) {
+  const filtered = array.filter((obj) =>
+    Object.entries(obj).filter((k, v) => k === keySelector)
+  );
+
+  return filtered;
 }
 
-console.log(shallowCopy({ a: 2, b: 5 }));
+console.log(
+  group(
+    [
+      { country: 'Belarus', city: 'Brest' },
+      { country: 'Russia', city: 'Omsk' },
+      { country: 'Russia', city: 'Samara' },
+      { country: 'Belarus', city: 'Grodno' },
+      { country: 'Belarus', city: 'Minsk' },
+      { country: 'Poland', city: 'Lodz' },
+    ],
+    (item) => item.country,
+    (item) => item.city
+  )
+);
 
-function removeProperties(obj, keys) {
-  const newObj = {};
+function mergeObjects(objects) {
+  const o = {};
 
-  keys.forEach((key) => {
-    const k = Object.keys(obj);
+  objects.forEach((obj) => {
+    Object.entries(obj).forEach((x) => {
+      const key = x[0];
+      const value = x[1];
 
-    if (k.indexOf(key) !== -1) {
-      newObj[key] = obj[key];
-    }
+      if (!o[key]) {
+        o[key] = 0;
+      }
+
+      o[key] += value;
+    });
   });
 
-  return newObj;
+  return o;
 }
 
-console.log(removeProperties({ a: 1, b: 2, c: 3 }, ['b', 'c']));
+console.log(
+  mergeObjects([
+    { a: 1, b: 2 },
+    { b: 3, c: 5 },
+  ])
+);
