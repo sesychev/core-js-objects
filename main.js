@@ -1,11 +1,23 @@
-function group(array, keySelector, valueSelector) {
-  const filtered = array.filter((obj) =>
-    Object.entries(obj).filter((k, v) => k === keySelector)
+function group(array, k, v) {
+  const multimap = new Map();
+  /*
+  array.map((obj) =>
+    multimap.set(
+      k(obj),
+      (multimap.get(k(obj)) === undefined ? [] : multimap.get(k(obj))).concat([v(obj)])
+    )
   );
+*/
 
-  return filtered;
+  array.reduce((a, c) => {
+    if (!multimap.get(k(c))) multimap.set(k(c), []);
+    multimap.get(k(c)).push(v(c));
+    return a;
+  }, new Map());
+
+  return multimap;
 }
-/*
+
 console.log(
   group(
     [
@@ -20,51 +32,3 @@ console.log(
     (item) => item.city
   )
 );
-*/
-function mergeObjects(objects) {
-  const o = {};
-
-  objects.forEach((obj) => {
-    Object.entries(obj).forEach((x) => {
-      const key = x[0];
-      const value = x[1];
-
-      if (!o[key]) {
-        o[key] = 0;
-      }
-
-      o[key] += value;
-    });
-  });
-
-  return o;
-}
-/*
-console.log(
-  mergeObjects([
-    { a: 1, b: 2 },
-    { b: 3, c: 5 },
-  ])
-);
-*/
-function removeProperties(obj, keys) {
-  /*
-  const o = {};
-  keys.forEach((key) => {
-    Object.keys(obj).forEach((k) => {
-      if (key === k) {
-        //console.log(key);
-        delete obj[k];
-      }
-    });
-  });
-*/
-  return Object.keys(obj)
-    .filter((key) => !keys.includes(key))
-    .reduce((acc, key) => {
-      acc[key] = obj[key];
-      return acc;
-    }, {});
-}
-
-console.log(removeProperties({ a: 1, b: 2, c: 3 }, ['b', 'c']));
