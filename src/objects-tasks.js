@@ -67,12 +67,13 @@ function mergeObjects(objects) {
  *
  */
 function removeProperties(obj, keys) {
-  return Object.keys(obj)
-    .filter((key) => !keys.includes(key))
-    .reduce((acc, key) => {
-      acc[key] = obj[key];
-      return acc;
-    }, {});
+  const res = {};
+
+  Object.assign(res, obj);
+
+  keys.forEach((key) => delete res[key]);
+
+  return res;
 }
 
 /**

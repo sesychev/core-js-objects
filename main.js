@@ -32,3 +32,36 @@ console.log(
     (item) => item.city
   )
 );
+//
+// create your Animal class like object here
+class Animal {
+  constructor(name, type) {
+    this.name = name;
+    this.type = type;
+  }
+
+  toString() {
+    return `${this.name} is a ${this.type}`;
+  }
+}
+
+const dog = new Animal('Max', 'dog');
+console.log(dog.toString()); // should return 'Max is a dog'
+console.log(dog.name);
+dog.name; // should == 'dog'
+
+dog.name; // should == 'Max'
+
+dog.name = 'Lassie'; // should set name to 'Lassie'
+
+class Person {
+  constructor(name, age) {
+    this.name = name;
+    this.age = age;
+  }
+  toString() {
+    return `Name: ${this.name}, Age: ${this.age}`;
+  }
+}
+let person = new Person('John', 30);
+console.log(person.toString()); // Output: "Name: John, Age: 30"
